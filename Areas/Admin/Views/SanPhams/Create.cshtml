@@ -1,0 +1,210 @@
+﻿@model Wine_e_commerce.Models.SanPham
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h2>Tạo mới</h2>
+                        @using (Html.BeginForm("Create", "SanPhams", FormMethod.Post, new { id = "registerForm", enctype = "multipart/form-data" }))
+                        {
+                            <div class="form-horizontal">
+                                <hr />
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Tên rượu</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Giá mua</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.PurchasePrice, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Giá bán</label>
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Quantity, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Vintage, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Vintage, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Loại rượu</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("CatalogyID", null, htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <img src="..." width="150" height="150" style="object-fit:cover" id="output" />
+                                        <p>
+                                            <label class="btn btn-dark" for="input">Thêm ảnh</label>
+                                        </p>
+                                        <input onchange="displayImg(event)" name="ImageFile" id="input" type="file" style="visibility: hidden; display: block" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Region, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Region, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">Nhà sản xuất</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("MaNhaSanXuat", null, htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button class="btn btn-primary my-3" type="submit">Thêm mới</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <p style="color: red; font-size: 18px; font-weight: bold" id="error-meg"></p>
+                                        <p style="color: green; font-size: 18px; font-weight: bold" id="success-meg"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div>
+                            @Html.ActionLink("Quay lại", "Index")
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section scripts {
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        var displayImg = (event) => {
+            var img = document.getElementById("output");
+            img.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+    <script type="text/javascript">
+    $(document).ready(() => {
+        $("#registerForm").validate({
+            errorClass: "is-invalid",
+            rules: {
+                ProductName: {
+                    required: true
+                },
+                PurchasePrice: {
+                    required: true,
+                    number: true
+                },
+                Price: {
+                    required: true,
+                    number: true
+                },
+                Quantity: {
+                    required: true,
+                    digits: true
+                },
+                Vintage: {
+                    required: true,
+                    digits: true
+                },
+                ImageFile: {
+                    required: true
+                },
+                Region: {
+                    required: true
+                }
+            },
+            messages: {
+                ProductName: {
+                    required: "Vui lòng nhập tên sản phẩm"
+                },
+                PurchasePrice: {
+                    required: "Vui lòng nhập giá mua",
+                    number: "Chỉ nhập chữ số"
+                },
+                Price: {
+                    required: "Vui lòng nhập giá bán",
+                    number: "Chỉ nhập chữ số"
+                },
+                Quantity: {
+                    required: "Vui lòng nhập số sản phẩm",
+                    digits: "Chỉ nhập chữ số"
+                },
+                Vintage: {
+                    required: "Vui lòng nhập năm sản xuất",
+                    digits: "Chỉ nhập chữ số"
+                },
+                ImageFile: {
+                    required: "Chưa tải ảnh lên"
+                },
+                Region: {
+                    required: "Chưa nhập xuất xứ"
+                }
+            },
+            submitHandler: (form) => {
+                var formData = new FormData(form);
+                var inputAjax = {
+                    type: "POST",
+                    url: '@Url.Action("Create", "SanPhams")',
+                    data: formData,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: (res) => {
+                        if (res.status == true) {
+                            $("#error-meg").html("");
+                            $("#success-meg").html("Thêm sản phẩm thành công");
+                            setTimeout(() => {
+                                window.location.href = "/Admin/SanPhams"
+                            }, 800);
+                        }
+                        else {
+                            $("#error-meg").html(res.error);
+                        }
+                    },
+                    error: (res) => {
+                        $("#error-meg").html(res.error);
+                    }
+                };
+                $.ajax(inputAjax);
+            }
+        });
+    });
+    </script>
+}
+
+

@@ -1,0 +1,184 @@
+﻿
+@{
+    ViewBag.Title = "RegisterV2";
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+<style>
+    .is-invalid{
+        color: red;
+        margin: 4px 0 0 0;
+    }
+</style>
+
+<main>
+    <div class="container">
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                        <div class="d-flex  py-4">
+                            <a href="~/Home"
+                               class="logo d-flex align-items-center w-auto">
+                                <span class="d-none d-lg-block">Rượu Đức Nhật </span>
+                            </a>
+                        </div>
+                        <!-- End Logo -->
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">
+                                        Đăng ký tài khoản
+                                    </h5>
+                                </div>
+                                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "registerForm", @class = "row g-3 " }))
+                                {
+                                    <div class="col-12">
+                                        <label for="yourName" class="form-label">Họ và tên</label>
+                                        <input type="text"
+                                               name="name"
+                                               class="form-control"
+                                               id="yourName"
+                                               required />
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="username" class="form-label">Tên đăng nhập</label>
+                                        <input type="text"
+                                               name="username"
+                                               class="form-control"
+                                               id="username"
+                                               required />
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="password" class="form-label">Mật khẩu</label>
+                                        <input type="password"
+                                               name="password"
+                                               class="form-control"
+                                               id="password"
+                                               required />
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="sdt" class="form-label">Số điện thoại</label>
+                                        <input type="text"
+                                               name="sdt"
+                                               class="form-control"
+                                               id="sdt"
+                                               required />
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="diachi" class="form-label">Địa chỉ</label>
+                                        <input type="text"
+                                               name="diachi"
+                                               class="form-control"
+                                               id="diachi"
+                                                />
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">
+                                            Đăng ký
+                                        </button>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="small mb-0">
+                                            Bạn có tài khoản rồi?
+                                            <a href="~/Account/Login">Đăng nhập</a>
+                                        </p>
+                                    </div>
+                                }
+                                <div class="d-flex py-4">
+                                    <a href="~/Home"
+                                       class="logo d-flex align-items-center w-auto" style="text-decoration: underline">
+                                        <span class="d-none d-lg-block">Quay lại trang chủ</span>
+                                    </a>
+                                </div>
+                                <div id="msg-success" class="d-flex py-4" style="color: green; font-size: 24px">
+
+                                </div>
+                                <div id="msg-error" class="d-flex py-4" style="color: red; font-size: 24px">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+
+@section Scripts {
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#registerForm").validate({
+                errorClass: "is-invalid",
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    username: {
+                        required: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6 // Mật khẩu ít nhất 6 ký tự
+                    },
+                    sdt: {
+                        required: true,
+                        digits: true, // Chỉ chấp nhận số
+                        minlength: 10, // Số điện thoại ít nhất 10 số
+                        maxlength: 12 // Số điện thoại tối đa 12 số
+                    },
+                    diachi: {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Vui lòng nhập họ và tên."
+                    },
+                    username: {
+                        required: "Vui lòng nhập tên đăng nhập."
+                    },
+                    password: {
+                        required: "Vui lòng nhập mật khẩu.",
+                        minlength: "Mật khẩu ít nhất 6 ký tự."
+                    },
+                    sdt: {
+                        required: "Vui lòng nhập số điện thoại.",
+                        digits: "Vui lòng nhập chỉ chứa số.",
+                        minlength: "Số điện thoại ít nhất 10 số.",
+                        maxlength: "Số điện thoại tối đa 12 số."
+                    },
+                    diachi: {
+                        required: "Vui lòng nhập địa chỉ."
+                    }
+                },
+                submitHandler: function (form) {
+                    var formData = $(form).serialize();
+                    $.ajax({
+                        type: "POST",
+                        url: '@Url.Action("Register", "Account")',
+                        data: formData,
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.status == true) {
+                                $("#msg-error").html("");
+                                $("#msg-success").html("Đăng ký thành công");
+                                setTimeout(function () {
+                                    window.location.href = "/Account/Login";
+                                }, 800);
+                            } else {
+                                $("#msg-error").html(res.error);
+                            }
+                        },
+                        error: function (res) {
+                            $("#msg-error").html(res.error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

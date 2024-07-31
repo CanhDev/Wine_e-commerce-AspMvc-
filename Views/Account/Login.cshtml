@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_FormLayout.cshtml";
+}
+
+
+<main>
+    <div class="container">
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                        <div class="d-flex  py-4">
+                            <a href="~/Home"
+                               class="logo d-flex align-items-center w-auto">
+                                <span class="d-none d-lg-block">Rượu Đức Nhật </span>
+                            </a>
+                        </div>
+                        <!-- End Logo -->
+
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">
+                                        Đăng nhập tài khoản
+                                    </h5>
+                                </div>
+                                @using (Html.BeginForm("Login", "Account", FormMethod.Post, new {@class = "row g-3 " }))
+                                {
+
+                                    <div class="col-12">
+                                        <label for="username" class="form-label">Tên đăng nhập</label>
+                                        <input type="text"
+                                               name="username"
+                                               class="form-control"
+                                               id="username"
+                                               required />
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="password" class="form-label">Mật khẩu</label>
+                                        <input type="password"
+                                               name="password"
+                                               class="form-control"
+                                               id="password"
+                                               required />
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">
+                                            Đăng nhập
+                                        </button>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="small mb-0">
+                                            Bạn chưa có tài khoản?
+                                            <a href="~/Account/Register">Đăng ký</a>
+                                        </p>
+                                    </div>
+                                }
+                                <div class="d-flex py-4">
+                                    <a href="~/Home"
+                                       class="logo d-flex align-items-center w-auto" style="text-decoration: underline">
+                                        <span class="d-none d-lg-block">Quay lại trang chủ</span>
+                                    </a>
+                                </div>
+                                @if (!String.IsNullOrEmpty(ViewBag.checkLogin))
+                                {
+                                    <p style="color:red">@ViewBag.checkLogin</p>
+                                }
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>

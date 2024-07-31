@@ -1,0 +1,334 @@
+﻿@model Wine_e_commerce.Models.KhachHang
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+    var imgPath = "/images/Personal_Images/" + Model.Image;
+}
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Thông tin cá nhân</h1>
+    </div>
+    <!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card">
+                    <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                        <img src="~/images/Personal_Images/@Model.Image"
+                             alt="Profile"
+                             class="rounded-circle" />
+                        <h2>@Model.TenKhachHang</h2>
+                        <h3>Admin</h3>
+                        <div class="social-links mt-2">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="#" class="instagram">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                            <a href="#" class="linkedin">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-8">
+                <div class="card">
+                    <div class="card-body pt-3">
+                        <!-- Bordered Tabs -->
+                        <ul class="nav nav-tabs nav-tabs-bordered">
+                            <li class="nav-item">
+                                <button class="nav-link active"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#profile-overview">
+                                    Tổng quan
+                                </button>
+                            </li>
+
+                            <li class="nav-item">
+                                <button class="nav-link"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#profile-edit">
+                                    Cập nhật thông tin
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link"
+                                        data-bs-toggle="tab"
+                                        data-bs-target="#profile-change-password">
+                                    Thay đổi mật khẩu
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="tab-content pt-2">
+                            <div class="tab-pane fade show active profile-overview"
+                                 id="profile-overview">
+                                <h5 class="card-title">Thông tin:t</h5>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Tên</div>
+                                    <div class="col-lg-9 col-md-8">@Model.TenKhachHang</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Địa chỉ</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        @Model.DiaChi
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Vai trò</div>
+                                    <div class="col-lg-9 col-md-8">Webmaster</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Quốc gia</div>
+                                    <div class="col-lg-9 col-md-8">Việt Nam</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-lg-3 col-md-4 label">Số điện thoại</div>
+                                    <div class="col-lg-9 col-md-8">
+                                        @Model.SoDienThoai
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade profile-edit pt-3"
+                                 id="profile-edit">
+                                <!-- Profile Edit Form -->
+                                @using (Html.BeginForm("Edit", "Profile", FormMethod.Post, new { id = "editForm", enctype = "multipart/form-data" }))
+                                {
+                                    @Html.HiddenFor(model => model.MaKhachHang)
+                                    @Html.HiddenFor(model => model.TenDangNhap)
+                                    @Html.HiddenFor(model => model.MatKhau)
+                                    <div class="row mb-3">
+                                        <label for="profileImage"
+                                               class="col-md-4 col-lg-3 col-form-label">Ảnh đại diện</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <img src="@Url.Content(imgPath)" alt="Profile" id="output" />
+                                            <div class="pt-2">
+                                                <p class="btn btn-primary btn-sm"
+                                                   title="Upload new profile image">
+                                                    <input name="imgEdit" id="input" type="file" style="display:none" onchange="displayImg(event)" />
+                                                    <label style="color:white" for="input"><i class="bi bi-upload"></i></label>
+                                                </p>
+                                                <input name="Image" value="@Model.Image" style="display:none" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3 ">
+                                        <label for="TenKhachHang"
+                                               class="col-md-4 col-lg-3 col-form-label">Tên</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="TenKhachHang"
+                                                   type="text"
+                                                   class="form-control"
+                                                   id="TenKhachHang"
+                                                   value="@Model.TenKhachHang" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 ">
+                                        <label for="DiaChi"
+                                               class="col-md-4 col-lg-3 col-form-label">Địa chỉ</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="DiaChi"
+                                                   type="text"
+                                                   class="form-control"
+                                                   id="DiaChi"
+                                                   value="@Model.DiaChi" />
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3 ">
+                                        <label for="SoDienThoai"
+                                               class="col-md-4 col-lg-3 col-form-label">Số điện thoại</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="SoDienThoai"
+                                                   type="text"
+                                                   class="form-control"
+                                                   id="SoDienThoai"
+                                                   value="@Model.SoDienThoai" />
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">
+                                            Lưu thông tin
+                                        </button>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <p style="color: red; font-size: 18px; font-weight: bold" id="error-meg"></p>
+                                            <p style="color: green; font-size: 18px; font-weight: bold" id="success-meg"></p>
+                                        </div>
+                                    </div>
+                                }
+                                <!-- End Profile Edit Form -->
+                            </div>
+
+                            <div class="tab-pane fade pt-3" id="profile-change-password">
+                                <!-- Change Password Form -->
+                                @using (Html.BeginForm("EditPassword", "Profile", FormMethod.Post, new {id = "EditPassword_form"}))
+                                {
+                                    <div class="row mb-3">
+                                        <label for="currentPassword"
+                                               class="col-md-4 col-lg-3 col-form-label">Mật khẩu hiện tại</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input required name="currentPassword"
+                                                   type="password"
+                                                   class="form-control"
+                                                   id="currentPassword" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="newPassword"
+                                               class="col-md-4 col-lg-3 col-form-label">Mật khẩu mới</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input required name="newpassword"
+                                                   type="password"
+                                                   class="form-control"
+                                                   id="newPassword" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="renewPassword"
+                                               class="col-md-4 col-lg-3 col-form-label">Nhập lại mật khẩu</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input required name="renewpassword"
+                                                   type="password"
+                                                   class="form-control"
+                                                   id="renewPassword" />
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">
+                                            Thay đổi mật khẩu
+                                        </button>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <p style="color: red; font-size: 18px; font-weight: bold" id="errorPass-meg"></p>
+                                            <p style="color: green; font-size: 18px; font-weight: bold" id="successPass-meg"></p>
+                                        </div>
+                                    </div>
+                                }
+                                <!-- End Change Password Form -->
+                            </div>
+                        </div>
+                        <!-- End Bordered Tabs -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+@section Scripts{
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        var displayImg = (event) => {
+            var img = document.getElementById("output");
+            img.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+    <script>
+        $(document).ready(() => {
+            $("#editForm").validate({
+                errorClass: "is-invalid",
+                rules: {
+                    TenKhachHang: {
+                        required: true
+                    },
+                    DiaChi: {
+                        required: true
+                    },
+                    SoDienThoai: {
+                        required: true,
+                        digits: true,
+                        minlength : 10
+                    }
+                },
+                messages: {
+                    TenKhachHang: {
+                        required: "Chưa nhập tên"
+                    },
+                    DiaChi: {
+                        required: "Chưa nhập địa chỉ"
+                    },
+                    SoDienThoai: {
+                        required: "Chưa nhập số điện thoại",
+                        digits: 'Chỉ được phép nhập số',
+                        minlength : "Số điện thoại bao gồm 10 chữ số"
+                    }
+                },
+                submitHandler: (form) => {
+                    var formData = new FormData(form);
+                    var inputAjax = {
+                        type: "POST",
+                        url: '@Url.Action("Edit", "Profile")',
+                        data: formData,
+                        dataType: "json",
+                        contentType: false,
+                        processData: false,
+                        success: (res) => {
+                            if (res.status == true) {
+                                $("#error-meg").html("");
+                                $("#success-meg").html("Cập nhật thông tin thành công");
+                                setTimeout(() => {
+                                    window.location.href = "/Admin/Profile";
+                                }, 500);
+                            }
+                            else {
+                                $("#error-meg").html(res.error);
+                            }
+                        },
+                        error: (res) => {
+                            $("#error-meg").html(res.error);
+                        }
+                    };
+                    $.ajax(inputAjax);
+                }
+            });
+            $("#EditPassword_form").on("submit", (event) => {
+                event.preventDefault();
+                var formData = new FormData(event.target);
+                var inputAjax = {
+                    type: "POST",
+                    url: '@Url.Action("EditPassword", "Profile")',
+                    data: formData,
+                    dataType: "json",
+                    contentType: false,
+                    processData: false,
+                    success: (res) => {
+                        if (res.status == true) {
+                            $("#errorPass-meg").html("");
+                            $("#successPass-meg").html("Thay đổi mật khẩu thành công");
+                            setTimeout(() => {
+                                window.location.href = "/Admin/Profile"
+                            }, 500);
+                        }
+                        else {
+                            $("#errorPass-meg").html(res.error);
+                        }
+                    },
+                    error: (res) => {
+                        $("#errorPass-meg").html(res.error);
+                    }
+                };
+                $.ajax(inputAjax);
+            });
+        });
+    </script>
+   
+}
+

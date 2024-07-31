@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "DisplayOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid page-header py-5">
+    <h1 class="opacity-0 text-center text-white display-5">...</h1>
+</div>
+
+<div class="container-fluid py-5">
+    <div class="d-flex justify-content-center">
+        <!-- Căn giữa phần tử container -->
+        <div class="container py-5">
+            @{
+                int count = ViewBag.count;
+                decimal total = ViewBag.total;
+            }
+            @using (Html.BeginForm("HandleOrder", "Order", FormMethod.Post))
+            {
+                @Html.Hidden("count", count, new { id = "hiddenCount" });
+                @Html.Hidden("total", total, new { id = "hiddenTotal" });
+                @Html.Hidden("idCart", (int)ViewBag.idUserCart)
+                <div class="row g-4 justify-content-center">
+                    <!-- Căn giữa các cột -->
+                    <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
+                        <div class="bg-light rounded">
+                            <div class="p-4">
+                                <h1 class="display-6 mb-4 border-bottom">Thanh Toán</h1>
+                                <div class="my-4 d-flex justify-content-between border-bottom p-2">
+                                    <h5 class="mb-0 me-4">số loại sản phẩm</h5>
+                                    <p id="itemCount" class="mb-0">@count</p>
+                                </div>
+                                <div class="my-4 d-flex justify-content-between border-bottom p-2">
+                                    <h5 class="mb-0 me-4">Phương thức thanh toán</h5>
+                                    <p style="text-align:right" class="mb-0">Thanh toán khi nhận hàng</p>
+                                </div>
+                                <div class="p-2">
+                                    <h5 class="my-2">Địa chỉ nhận hàng:</h5>
+                                    <input name="address" required placeholder="Nhập địa chỉ..." class="form-control" />
+                                </div>
+                            </div>
+                            <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
+                                <h5 class="mb-0 ps-4 me-4">Tổng tiền:</h5>
+                                <p id="totalPrice" class="mb-0 pe-4">$@total</p>
+                            </div>
+                            <button type="submit" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">
+                                Đặt hàng
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

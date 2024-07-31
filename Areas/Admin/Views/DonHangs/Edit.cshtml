@@ -1,0 +1,154 @@
+﻿@model Wine_e_commerce.Models.DonHang
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Table with stripped rows -->
+                        <h2>Sửa đơn hàng</h2>
+
+
+                        @using (Html.BeginForm("Edit", "DonHangs", FormMethod.Post, new { id = "editForm" }))
+                        {
+
+                            <div class="form-horizontal">
+                                <hr />
+                                @Html.HiddenFor(model => model.MaDonHang)
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.PhuongThucThanhToan, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.PhuongThucThanhToan, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div hidden class="form-group">
+                                    @Html.LabelFor(model => model.TongSanPham, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.TongSanPham, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DiaChiNhanHang, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.DiaChiNhanHang, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div hidden class="form-group">
+                                    @Html.LabelFor(model => model.TongTien, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.TongTien, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div hidden class="form-group">
+                                    @Html.LabelFor(model => model.idKhachHang, "idKhachHang", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("idKhachHang", null, htmlAttributes: new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ngayDat, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.ngayDat, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button class="btn btn-primary my-3" type="submit">Lưu</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <p style="color: red" id="error-meg"></p>
+                                        <p style="color: forestgreen" id="success-meg"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div>
+                            @Html.ActionLink("Quay lại", "Index")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+@section scripts{
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        $(document).ready(() => {
+            $("#editForm").validate({
+                errorClass: "is-invalid",
+                rules: {
+                    PhuongThucThanhToan: {
+                        required: true
+                    },
+                    DiaChiNhanHang:{
+                        required: true
+                    },
+                    ngayDat:{
+                        required: true,
+                        date: true
+                    }
+                },
+                messages: {
+                    PhuongThucThanhToan: {
+                        required: "Chưa nhập phương thức thanh toán"
+                    },
+                    DiaChiNhanHang: {
+                        required: "Chưa nhập địa chỉ nhận hàng"
+                    },
+                    ngayDat: {
+                        required: "Chưa nhập ngày đặt",
+                        date: "Ngày đặt không hợp lệ!"
+                    }
+                },
+                submitHandler: (form) => {
+                    var formData = new FormData(form);
+                    var inputAjax = {
+                        type: "POST",
+                        url: '@Url.Action("Edit", "DonHangs")',
+                        data: formData,
+                        dataType: "json",
+                        contentType: false,
+                        processData: false,
+                        success: (res) => {
+                            if (res.status == true) {
+                                $("#error-meg").html("");
+                                $("#success-meg").html("Sửa thành công");
+                                setTimeout(() => {
+                                    window.location.href = "/Admin/DonHangs";
+                                }, 500);
+                            }
+                            else {
+                                $("#error-meg").html(res.error);
+                            }
+                        },
+                        error: (res) => {
+                            $("#error-meg").html(res.error);
+                        }
+                    };
+                    $.ajax(inputAjax);
+                }
+            });
+        });
+    </script>
+}
+

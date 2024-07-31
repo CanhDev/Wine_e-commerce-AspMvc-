@@ -1,0 +1,174 @@
+﻿@model Wine_e_commerce.Models.KhachHang
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<main id="main" class="main">
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Table with stripped rows -->
+                        <h2>Thêm mới</h2>
+
+                        @using (Html.BeginForm("Create", "KhachHangs", FormMethod.Post, new { id = "createForm", enctype = "multipart/form-data" }))
+                        {
+
+                            <div class="form-horizontal">
+                                <hr />
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TenKhachHang, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.TenKhachHang, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DiaChi, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TenDangNhap, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.TenDangNhap, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.MatKhau, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.MatKhau, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.SoDienThoai, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.SoDienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        <img src="~/images/Personal_Images/default_avatar.png" id="output" width="150" class="img-thumbnail" />
+                                        <p>
+                                            <label class="btn btn-dark" for="input">Thêm ảnh</label>
+                                        </p>
+                                        <input onchange="displayImg(event)" id="input"  name="imgFile" type="file" style="display: none" />
+                                        <input value="default_avatar.png"  name="Image" hidden/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button class="btn btn-primary my-3" type="submit">Thêm mới</button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <p style="color: red; font-size: 18px; font-weight: bold" id="error-meg"></p>
+                                        <p style="color: green; font-size: 18px; font-weight: bold" id="success-meg"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div>
+                            @Html.ActionLink("Quay lại", "Index")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+@section scripts{
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script>
+        var displayImg = (event) => {
+            var img = document.getElementById("output");
+            img.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
+    <script>
+        $(document).ready(() => {
+            $("#createForm").validate({
+                errorClass: "is-invalid",
+                rules: {
+                    TenKhachHang: {
+                        required: true
+                    },
+                    DiaChi: {
+                        required: true
+                    },
+                    TenDangNhap: {
+                        required: true
+                    },
+                    MatKhau: {
+                        required: true,
+                        minlength: 6
+                    },
+                    SoDienThoai: {
+                        required: true,
+                        digits: true,
+                        minlength: 10
+                    }
+                },
+                messages: {
+                    TenKhachHang: {
+                        required: "Chưa nhập tên khách hàng"
+                    },
+                    DiaChi: {
+                        required: "Chưa nhập địa chỉ"
+                    },
+                    TenDangNhap: {
+                        required: "Chưa nhập tên đăng nhập"
+                    },
+                    MatKhau: {
+                        required: "Chưa nhập mật khẩu",
+                        minlength: "Mật khẩu chứa ít nhất 6 ký tự"
+                    },
+                    SoDienThoai: {
+                        required: "Chưa nhập số điện thoại",
+                        digits: "Chỉ cho phép nhập số",
+                        minlength: "Số điện thoại phải đủ 10 chữ số"
+                    }
+                },
+                submitHandler: (form) => {
+                    var formData = new FormData(form);
+                    var inputAjax = {
+                        type: "POST",
+                        url: '@Url.Action("Create", "KhachHangs")',
+                        data: formData,
+                        dataType: "json",
+                        contentType: false,
+                        processData: false,
+                        success: (res) => {
+                            if (res.status == true) {
+                                $("#error-meg").html("");
+                                $("#success-meg").html("Thêm khách hàng thành công");
+                                setTimeout(() => {
+                                    window.location.href = "/Admin/KhachHangs"
+                                }, 800);
+                            }
+                            else {
+                                $("#error-meg").html(res.error);
+                            }
+                        },
+                        error: (res) => {
+                            $("#error-meg").html(res.error);
+                        }
+                    };
+                    $.ajax(inputAjax);
+                }
+            });
+        });
+    </script>
+}
