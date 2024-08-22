@@ -3,10 +3,13 @@
 @{
     ViewBag.Title = "Your Cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    decimal total = 0;
-    int count = 0;
 }
-
+<style>
+    .cartBtn:hover{
+        opacity: 0.5;
+        transition: all linear 0.2s;
+    }
+</style>
 
 <!-- Single Page Header start -->
 <div class="container-fluid page-header py-5">
@@ -46,26 +49,27 @@
                                     <p class="mb-0 mt-4">$@item.SanPham.Price</p>
                                 </td>
                                 <td>
-                                    <p class="mb-0 mt-4">@item.SoLuong</p>
+                                    <div style="display:flex">
+                                        <button data-id="@item.itemCartID"  id="addBtn" style="margin:0 6px; border-radius: 40%; border: 2px solid green; background-color: white" class="cartBtn mb-0 mt-4">
+                                            +
+                                        </button>
+                                        <p class="priceProduct" hidden>@item.SanPham.Price</p>
+                                        <p class="quantity mb-0 mt-4">@item.SoLuong</p>
+                                        <button data-id="@item.itemCartID" id="minus_btn" style="margin: 0 6px; border-radius: 40%; border: 2px solid green; background-color: white" class="cartBtn mb-0 mt-4">
+                                            -
+                                        </button>
+                                    </div>
                                 </td>
                                 <td>
-                                    <p class="mb-0 mt-4">$@(item.SoLuong * item.SanPham.Price)</p>
+                                    <p class="sumMoney mb-0 mt-4">$@(item.SoLuong * item.SanPham.Price)</p>
                                 </td>
                                 <td>
-                                    <a href="@Url.Action("removeItem", "Cart", new {id = item.itemCartID}, null)" data-id="@item.itemCartID" class="btn btn-md rounded-circle bg-light border mt-4 btn-remove-item">
+                                    <a href="#" data-id="@item.itemCartID" class="btn btn-md rounded-circle bg-light border mt-4 btn-remove-item">
                                         <i class="fa fa-times text-danger"></i>
                                     </a>
                                 </td>
 
                             </tr>
-
-                            if ((item.SanPham.Price * item.SoLuong).HasValue)
-                            {
-                                var temp = item.SanPham.Price * item.SoLuong.GetValueOrDefault();
-                                total += temp;
-                                count++;
-                            }
-
                         }
                     </tbody>
                 </table>
@@ -86,8 +90,8 @@
         $(document).ready(() => {
             $(".btn-remove-item").on("click", (e) => {
                 e.preventDefault();
-                var target = $(e.target).closest('a'); 
-                var id = target.data("id"); 
+                var target = $(e.target).closest('a');
+                var id = target.data("id");
                 console.log(id);
                 var row = target.closest('tr');
                 var check = confirm("Bạn có chắc chắn muốn xóa sản phẩm này?");
@@ -100,11 +104,12 @@
                             id: id,
                         }),
                         dataType: "json",
-                        contentType: "application/json", 
+                        contentType: "application/json",
                         processData: true,
                         success: (res) => {
                             if (res.status == true) {
                                 row.remove();
+                                toastr.success("Xóa thành công", "Thông báo");
                                 if ($('table tbody tr').length == 0) {
                                     $('#btn-remove-all').remove();
                                     $('#btn-order').remove();
@@ -114,11 +119,11 @@
                                 $('#spinner').removeClass("show");
                             }
                             else {
-                                alert(res.error);
+                                toastr.error(res.error, "Lỗi");
                             }
                         },
                         error: (res) => {
-                            alert(res.error);
+                            toastr.error(res.error, "Lỗi");
                         }
                     };
                     $.ajax(inputAjax);
@@ -127,7 +132,7 @@
             $("#btn-remove-all").on("click", (e) => {
                 e.preventDefault();
                 var target = e.target;
-                var url = $(target).closest("a").attr("href"); 
+                var url = $(target).closest("a").attr("href");
                 var check = confirm("Bạn có chắc chắn muốn xóa hết sản phẩm?");
                 if (check) {
                     $('#spinner').addClass("show");
@@ -140,18 +145,75 @@
                         success: (res) => {
                             if (res.status == true) {
                                 $('#spinner').removeClass("show");
-                                window.location.href = "/Cart";
+                                setTimeout(() => {
+                                    window.location.href = '@Url.Action("Index", "Cart")';
+                                }, 100);
+                                toastr.success("Xóa thành công", "Thông báo");
                             } else {
-                                alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
+                                toastr.warning('Đã có lỗi xảy ra. Vui lòng thử lại.', "Cảnh báo");
                             }
                         },
                         error: (res) => {
-                            alert('Đã có lỗi xảy ra. Vui lòng thử lại.');
+                            toastr.warning('Đã có lỗi xảy ra. Vui lòng thử lại.', "Cảnh báo");
                         }
                     };
                     $.ajax(inputAjax);
                 }
             });
+
+            //
+            $(".cartBtn").on("click", (e) => {
+                var target = $(e.target).closest('button'); 
+                var option = target.text().trim(); 
+                var id = target.data("id"); 
+                var check = true;
+                var row = target.closest('tr'); 
+                var quantityElem = row.find(".quantity"); 
+                var quantity = parseInt(quantityElem.text()); 
+
+                var sumMoneyElem = row.find(".sumMoney");
+                var price = parseFloat(row.find(".priceProduct").text());
+
+                if (option == "-" && quantity == 1) {
+                    check = false;
+                }
+
+                if (check) {
+                    $('#spinner').addClass("show"); 
+
+                    var inputAjax = {
+                        type: "POST",
+                        url: '@Url.Action("updateQuantity", "Cart")',
+                        data: JSON.stringify({
+                            id: id,
+                            option: option,
+                            price: price
+                        }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: (res) => {
+                            if (res.status === true) {
+                                quantityElem.text(res.value);
+                                var formattedMoney = parseFloat(res.money).toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD'
+                                });
+
+                                sumMoneyElem.text(formattedMoney);
+                                $('#spinner').removeClass("show"); 
+                            } else {
+                                alert(res.error); 
+                            }
+                        },
+                        error: (res) => {
+                            alert("Có lỗi xảy ra!"); 
+                        }
+                    };
+
+                    $.ajax(inputAjax); 
+                }
+            });
+
         });
     </script>
 }

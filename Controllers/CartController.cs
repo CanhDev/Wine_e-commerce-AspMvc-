@@ -112,5 +112,32 @@ namespace Wine_e_commerce.Controllers
             }
             return Json(new {status = false});
         }
+        [RoleUser]
+        [HttpPost]
+        public ActionResult updateQuantity(int? id, string option, double price)
+        {
+            try
+            {
+                ItemCart item = db.ItemCarts.Find(id);
+                if (option.Equals("+"))
+                {
+                    ++item.SoLuong;
+                }
+                else
+                {
+                    --item.SoLuong;
+                }
+                db.SaveChanges();
+                return Json(new {status = true, value = item.SoLuong.Value, money = item.SoLuong * price , JsonRequestBehavior.AllowGet});
+            }
+            catch(Exception ex)
+            {
+                return Json(new { status = false, error = ex.Message });
+            }
+        }
+        public ActionResult test()
+        {
+            return View();
+        }
     }
 }

@@ -69,7 +69,7 @@
             var soluong = $("#soluong").val();
             //
             if (soluong < 1) {
-                alert("Số lượng phải lớn hơn 0");
+                toastr.error("Số lượng phải lớn hơn 0", "Lỗi");
             }
             else {
                 let inputAjax = {
@@ -82,14 +82,14 @@
                 contentType: "application/json;charset=utf-8",
                 success: (res) => {
                     if (res.status == true) {
-                        alert("Thêm thành công");
+                        toastr.success("Thêm thành công", "Thông báo");
                     }
                     else {
-                        alert(res.error);
+                        toastr.error(res.error, "Lỗi");
                     }
                 },
                 error: (res) => {
-                    alert(res.error);
+                    toastr.error(res.error, "Lỗi");
                 }
             };
             $.ajax(inputAjax);

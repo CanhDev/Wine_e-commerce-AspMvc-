@@ -138,7 +138,7 @@ namespace Wine_e_commerce.Areas.Admin.Controllers
                 return Json(new { status = false, error = "Lỗi trong quá trình sửa!" });
             }
         }
-
+/*
         // GET: Admin/DonHangs/Delete/5
         [RoleUser(functionCode = "Admin_OrderManagement")]
         public ActionResult Delete(int? id)
@@ -153,7 +153,7 @@ namespace Wine_e_commerce.Areas.Admin.Controllers
                     return HttpNotFound();
                 }
                 return View(donHang);
-        }
+        }*/
 
         // POST: Admin/DonHangs/Delete/5
         [HttpPost]

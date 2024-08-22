@@ -98,7 +98,10 @@ namespace Wine_e_commerce.Areas.Admin.Controllers
                             imgFile.SaveAs(path);
                             khachHang.Image = fileName;
                         }
-
+                        else
+                        {
+                            khachHang.Image = "default_avatar.png";
+                        }
                         khachHang.MatKhau = desHelper.Encrypt(khachHang.MatKhau);
                         db.KhachHangs.Add(khachHang);
                         db.SaveChanges();
@@ -166,7 +169,7 @@ namespace Wine_e_commerce.Areas.Admin.Controllers
 
         
         [RoleUser(functionCode = "DeleteKhachHang")]
-        public ActionResult Delete(int? id)
+        /*public ActionResult Delete(int? id)
         {
                 if (id == null)
                 {
@@ -179,7 +182,7 @@ namespace Wine_e_commerce.Areas.Admin.Controllers
                 }
             if (khachHang.TenDangNhap.Contains("Admin")) return RedirectToAction("Index", "Check");
                 return View(khachHang);
-        }
+        }*/
 
         // POST: Admin/KhachHangs/Delete/5
         [HttpPost]

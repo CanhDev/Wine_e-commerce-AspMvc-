@@ -87,7 +87,7 @@ namespace Wine_e_commerce.Controllers
                     //set session
                     SessionConfig.setUser(user);
                     ViewBag.checkLogin = "";
-                    if (user.TenDangNhap.Contains("Admin"))
+                    if (user.TenDangNhap.Equals("Admin"))
                     {
                         return Redirect("/Admin");
                     }

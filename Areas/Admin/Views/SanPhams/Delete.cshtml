@@ -114,37 +114,4 @@
         </div>
     </section>
 </main>
-@section scripts{
-    <script src="~/Scripts/jquery-3.7.1.js"></script>
-    <script src="~/Scripts/jquery.validate.js"></script>
-    <script>
-        $(document).ready(() => {
-            $("#registerForm").on("submit", (event) => {
-                event.preventDefault();
-                var inputAjax = {
-                    type: "POST",
-                    url: '@Url.Action("HandleDelete", "SanPhams", new {id = Model.ProductID})',
-                    dataType: "json",
-                    contentType: false,
-                    processData: false,
-                    success: (res) => {
-                        if (res.status == true) {
-                            $("#error-meg").html("");
-                            $("#success-meg").html("Xóa thành công");
-                            setTimeout(() => {
-                                window.location.href = "/Admin/SanPhams"
-                            }, 400);
-                        }
-                        else {
-                            $("#error-meg").html(res.error);
-                        }
-                    },
-                    error: (res) => {
-                        $("#error-meg").html(res.error);
-                    }
-                };
-                $.ajax(inputAjax);
-            });
-        });
-    </script>
-}
+

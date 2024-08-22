@@ -1,6 +1,6 @@
 ﻿@model PagedList.IPagedList<Wine_e_commerce.Models.SanPham>
 @using PagedList.Mvc;
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css"/>
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
@@ -54,7 +54,7 @@
                                         <td>@item.Quantity</td>
                                         <td>
                                             <a href="@Url.Action("Edit", "SanPhams", new {id = item.ProductID})" class="btn btn-outline-dark">Sửa</a>
-                                            <a href="@Url.Action("Delete", "SanPhams", new {id = item.ProductID})" class="btn btn-outline-danger">Xóa</a>
+                                            <a href="#" data-id="@item.ProductID" class="deleteBtn btn btn-outline-danger">Xóa</a>
                                         </td>
                                     </tr>
                                 }
@@ -62,10 +62,10 @@
                         </table>
                         Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchString = ViewBag.searchString }), new PagedListRenderOptions
-                   {
-                       LiElementClasses = new[] { "rounded" },
-                       UlElementClasses = new[] { "pagination", "justify-content-center", "d-flex", " mt-5" }
-                   })
+                        {
+                            LiElementClasses = new[] { "rounded" },
+                            UlElementClasses = new[] { "pagination", "justify-content-center", "d-flex", " mt-5" }
+                        })
                         <!-- End Table with stripped rows -->
                     </div>
                 </div>

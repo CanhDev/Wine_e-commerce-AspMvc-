@@ -106,17 +106,7 @@
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="MaDonHang" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <Association Name="FK__SanPham__MaNhaSa__412EB0B6">
+        <Association Name="FK__SanPham__MaNhaSa__4E88ABD4">
           <End Role="NhaSanXuat" Type="Self.NhaSanXuat" Multiplicity="0..1" />
           <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
           <ReferentialConstraint>
@@ -128,7 +118,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SanPham_D__MaDon__4CA06362">
+        <Association Name="FK__SanPham_D__MaDon__5070F446">
           <End Role="DonHang" Type="Self.DonHang" Multiplicity="1" />
           <End Role="SanPham_DonHang" Type="Self.SanPham_DonHang" Multiplicity="*" />
           <ReferentialConstraint>
@@ -140,7 +130,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SanPham_D__Produ__4BAC3F29">
+        <Association Name="FK__SanPham_D__Produ__5165187F">
           <End Role="SanPham" Type="Self.SanPham" Multiplicity="1" />
           <End Role="SanPham_DonHang" Type="Self.SanPham_DonHang" Multiplicity="*" />
           <ReferentialConstraint>
@@ -247,16 +237,15 @@
           <EntitySet Name="NhaSanXuat" EntityType="Self.NhaSanXuat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SanPham_DonHang" EntityType="Self.SanPham_DonHang" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__SanPham__MaNhaSa__412EB0B6" Association="Self.FK__SanPham__MaNhaSa__412EB0B6">
+          <AssociationSet Name="FK__SanPham__MaNhaSa__4E88ABD4" Association="Self.FK__SanPham__MaNhaSa__4E88ABD4">
             <End Role="NhaSanXuat" EntitySet="NhaSanXuat" />
             <End Role="SanPham" EntitySet="SanPham" />
           </AssociationSet>
-          <AssociationSet Name="FK__SanPham_D__MaDon__4CA06362" Association="Self.FK__SanPham_D__MaDon__4CA06362">
+          <AssociationSet Name="FK__SanPham_D__MaDon__5070F446" Association="Self.FK__SanPham_D__MaDon__5070F446">
             <End Role="DonHang" EntitySet="DonHang" />
             <End Role="SanPham_DonHang" EntitySet="SanPham_DonHang" />
           </AssociationSet>
-          <AssociationSet Name="FK__SanPham_D__Produ__4BAC3F29" Association="Self.FK__SanPham_D__Produ__4BAC3F29">
+          <AssociationSet Name="FK__SanPham_D__Produ__5165187F" Association="Self.FK__SanPham_D__Produ__5165187F">
             <End Role="SanPham" EntitySet="SanPham" />
             <End Role="SanPham_DonHang" EntitySet="SanPham_DonHang" />
           </AssociationSet>
@@ -383,7 +372,7 @@
           </Key>
           <Property Name="MaNhaSanXuat" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TenNhaSanXuat" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="SanPhams" Relationship="Self.FK__SanPham__MaNhaSa__412EB0B6" FromRole="NhaSanXuat" ToRole="SanPham" />
+          <NavigationProperty Name="SanPhams" Relationship="Self.FK__SanPham__MaNhaSa__4E88ABD4" FromRole="NhaSanXuat" ToRole="SanPham" />
         </EntityType>
         <EntityType Name="SanPham">
           <Key>
@@ -402,18 +391,8 @@
           <Property Name="MaNhaSanXuat" Type="Int32" />
           <NavigationProperty Name="ItemCarts" Relationship="Self.FK_ItemCart_SanPham" FromRole="SanPham" ToRole="ItemCart" />
           <NavigationProperty Name="LoaiSanPham" Relationship="Self.FK_Products_Catalogy" FromRole="SanPham" ToRole="LoaiSanPham" />
-          <NavigationProperty Name="NhaSanXuat" Relationship="Self.FK__SanPham__MaNhaSa__412EB0B6" FromRole="SanPham" ToRole="NhaSanXuat" />
+          <NavigationProperty Name="NhaSanXuat" Relationship="Self.FK__SanPham__MaNhaSa__4E88ABD4" FromRole="SanPham" ToRole="NhaSanXuat" />
           <NavigationProperty Name="DonHangs" Relationship="Self.SanPham_DonHang" FromRole="SanPham" ToRole="DonHang" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <Association Name="FK_Authorize_KhachHang">
           <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="1" />
@@ -499,7 +478,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SanPham__MaNhaSa__412EB0B6">
+        <Association Name="FK__SanPham__MaNhaSa__4E88ABD4">
           <End Role="NhaSanXuat" Type="Self.NhaSanXuat" Multiplicity="0..1" />
           <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
           <ReferentialConstraint>
@@ -525,7 +504,6 @@
           <EntitySet Name="my_Funtion" EntityType="Self.my_Funtion" />
           <EntitySet Name="NhaSanXuats" EntityType="Self.NhaSanXuat" />
           <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <AssociationSet Name="FK_Authorize_KhachHang" Association="Self.FK_Authorize_KhachHang">
             <End Role="KhachHang" EntitySet="KhachHangs" />
             <End Role="Authorize" EntitySet="Authorizes" />
@@ -554,7 +532,7 @@
             <End Role="LoaiSanPham" EntitySet="LoaiSanPhams" />
             <End Role="SanPham" EntitySet="SanPhams" />
           </AssociationSet>
-          <AssociationSet Name="FK__SanPham__MaNhaSa__412EB0B6" Association="Self.FK__SanPham__MaNhaSa__412EB0B6">
+          <AssociationSet Name="FK__SanPham__MaNhaSa__4E88ABD4" Association="Self.FK__SanPham__MaNhaSa__4E88ABD4">
             <End Role="NhaSanXuat" EntitySet="NhaSanXuats" />
             <End Role="SanPham" EntitySet="SanPhams" />
           </AssociationSet>
@@ -667,17 +645,6 @@
                 <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="Region" ColumnName="Region" />
                 <ScalarProperty Name="MaNhaSanXuat" ColumnName="MaNhaSanXuat" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="RUOUModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

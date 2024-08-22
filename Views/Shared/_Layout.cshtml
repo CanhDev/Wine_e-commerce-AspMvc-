@@ -32,6 +32,7 @@
     <link href="~/template_srs/css/style.css" rel="stylesheet" />
     <link href="~/Content/myStyle.css" rel="stylesheet" />
     <link rel="icon" type="image/x-icon" href="~/images/Ruou/s2.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 
 <body>
@@ -197,7 +198,7 @@
                 </div>
             </div>
             <div class="row g-5">
-               
+
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-item">
                         <h4 class="text-light mb-3">Liên hệ</h4>
@@ -247,7 +248,8 @@
     <script src="~/template_srs/js/main.js"></script>
     <script src="~/Scripts/jquery-3.7.1.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-        <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
         var handleAdd = (id) => {
             let inputAjax = {
                 type: "POST",
@@ -259,21 +261,21 @@
                 contentType: "application/json;charset=utf-8",
                 success: (res) => {
                     if (res.status == true) {
-                        alert("Thêm thành công");
+                        toastr.success("Thêm thành công!", "Thông báo");
                     }
                     else {
-                        alert(res.error);
+                        toastr.error(res.error, "Lỗi");
                     }
                 },
                 error: (res) => {
-                    alert(res.error);
+                    toastr.error(res.error, "Lỗi");
                 }
             };
             $.ajax(inputAjax);
             return false;
         }
-        </script>
-        @Scripts.Render("~/bundles/jqueryval")
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("scripts", required: false)
 </body>
 </html>

@@ -57,11 +57,10 @@
                                         @Html.DropDownList("idKhachHang", null, htmlAttributes: new { @class = "form-control" })
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.ngayDat, htmlAttributes: new { @class = "control-label col-md-2" })
                                     <div class="col-md-10">
-                                        @Html.EditorFor(model => model.ngayDat, new { htmlAttributes = new { @class = "form-control" } })
+                                        <input type="date" class="form-control" name="ngayDat" value="@Model.ngayDat.Value.ToString("yyyy-MM-dd")" />
                                     </div>
                                 </div>
 

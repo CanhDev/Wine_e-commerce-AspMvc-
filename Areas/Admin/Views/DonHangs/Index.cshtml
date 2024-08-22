@@ -55,7 +55,7 @@
                                             <td>@item.KhachHang.TenKhachHang</td>
                                             <td>
                                                 <a href="@Url.Action("Edit", "DonHangs", new {id = item.MaDonHang})" class="btn btn-outline-dark">Sửa</a>
-                                                <a href="@Url.Action("Delete", "DonHangs", new {id = item.MaDonHang})" class="btn btn-outline-danger">Xóa</a>
+                                                <a href="#" data-id="@item.MaDonHang" class="deleteOrder btn btn-outline-danger">Xóa</a>
                                             </td>
                                         </tr>
                                     }
