@@ -63,13 +63,13 @@
                     {
                         <a href="#" class="text-white">Welcome @kh.TenDangNhap</a>
                         <a href="#" class="text-white">|</a>
-                        <a href="/Account/Logout" class="text-white">Đăng xuất</a>
+                        <a href="@Url.Action("Logout","Account")" class="text-white">Đăng xuất</a>
                     }
                     else
                     {
-                        <a href="/Account/Register" class="text-white">Đăng ký /</a>
+                        <a href="@Url.Action("Register","Account")" class="text-white">Đăng ký /</a>
                         <span class="opacity-0 text-center text-white">.</span>
-                        <a href="/Account/Login" class="text-white">Đăng nhập</a>
+                        <a href="@Url.Action("Login","Account")" class="text-white">Đăng nhập</a>
                     }
                 </div>
             </div>
@@ -103,14 +103,14 @@
                     <div class="d-flex m-3 me-0">
                         @if (kh != null)
                         {
-                            <a href="/Cart" class="position-relative me-4 my-auto">
+                            <a href="@Url.Action("Index", "Cart")" class="position-relative me-4 my-auto">
                                 <i class="fa fa-shopping-bag fa-2x"></i>
                             </a>
                             if (kh.TenDangNhap.Contains("Admin"))
                             {
 
 
-                                <a href="/Admin/" class="my-auto">
+                                <a href="~/Admin/" class="my-auto">
                                     <i class="fas fa-user fa-2x"></i>
                                 </a>
                             }

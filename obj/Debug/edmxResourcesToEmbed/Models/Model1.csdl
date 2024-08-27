@@ -111,6 +111,16 @@
     <NavigationProperty Name="NhaSanXuat" Relationship="Self.FK__SanPham__MaNhaSa__4E88ABD4" FromRole="SanPham" ToRole="NhaSanXuat" />
     <NavigationProperty Name="DonHangs" Relationship="Self.SanPham_DonHang" FromRole="SanPham" ToRole="DonHang" />
   </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
   <Association Name="FK_Authorize_KhachHang">
     <End Role="KhachHang" Type="Self.KhachHang" Multiplicity="1" />
     <End Role="Authorize" Type="Self.Authorize" Multiplicity="*" />
@@ -221,6 +231,7 @@
     <EntitySet Name="my_Funtion" EntityType="Self.my_Funtion" />
     <EntitySet Name="NhaSanXuats" EntityType="Self.NhaSanXuat" />
     <EntitySet Name="SanPhams" EntityType="Self.SanPham" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <AssociationSet Name="FK_Authorize_KhachHang" Association="Self.FK_Authorize_KhachHang">
       <End Role="KhachHang" EntitySet="KhachHangs" />
       <End Role="Authorize" EntitySet="Authorizes" />

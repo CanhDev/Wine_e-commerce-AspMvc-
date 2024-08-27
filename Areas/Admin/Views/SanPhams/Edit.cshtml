@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
-    var imgPath = "/images/Ruou/" + Model.Image;
+    var imgPath = "~/images/Ruou/" + Model.Image;
 }
 <style>
     .is-invalid {
@@ -193,7 +193,7 @@
                                 $("#error-meg").html("");
                                 $("#success-meg").html("Sửa sản phẩm thành công");
                                 setTimeout(() => {
-                                    window.location.href = "/Admin/SanPhams";
+                                    window.location.href = '@Url.Action("Index", "SanPhams")'
                                 }, 500);
                             }
                             else {

@@ -197,14 +197,17 @@ namespace Wine_e_commerce.Areas.Admin.Controllers
             {
                 SanPham sanPham = db.SanPhams.Find(id);
                 ItemCart item = db.ItemCarts.FirstOrDefault(i => i.idSanPham == id);
-                db.ItemCarts.Remove(item);
+                if(item != null)
+                {
+                    db.ItemCarts.Remove(item);
+                }
                 db.SanPhams.Remove(sanPham);
                 db.SaveChanges();
                 return Json(new { status = true, JsonRequestBehavior.AllowGet });
             }
-            catch
+            catch(Exception ex)
             {
-                return Json(new {status = false, error = "Lỗi trong quá trình xóa, hãy thử lại sau"});
+                return Json(new {status = false, error = ex.Message});
             }
         }
         protected override void Dispose(bool disposing)

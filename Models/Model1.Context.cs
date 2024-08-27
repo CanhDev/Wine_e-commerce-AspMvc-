@@ -34,5 +34,6 @@ namespace Wine_e_commerce.Models
         public virtual DbSet<my_Funtion> my_Funtion { get; set; }
         public virtual DbSet<NhaSanXuat> NhaSanXuats { get; set; }
         public virtual DbSet<SanPham> SanPhams { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

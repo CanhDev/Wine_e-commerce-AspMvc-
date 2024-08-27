@@ -189,7 +189,7 @@
                             $("#error-meg").html("");
                             $("#success-meg").html("Thêm sản phẩm thành công");
                             setTimeout(() => {
-                                window.location.href = "/Admin/SanPhams"
+                                window.location.href = '@Url.Action("Index", "SanPhams")'
                             }, 800);
                         }
                         else {

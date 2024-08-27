@@ -281,7 +281,7 @@
                                 $("#error-meg").html("");
                                 $("#success-meg").html("Cập nhật thông tin thành công");
                                 setTimeout(() => {
-                                    window.location.href = "/Account/ClientProfile";
+                                    window.location.href = '@Url.Action("ClientProfile", "Account")'
                                 }, 500);
                             }
                             else {
@@ -310,7 +310,7 @@
                             $("#errorPass-meg").html("");
                             $("#successPass-meg").html("Thay đổi mật khẩu thành công");
                             setTimeout(() => {
-                                window.location.href = "/Account/ClientProfile"
+                                window.location.href = '@Url.Action("ClientProfile", "Account")'
                             }, 500);
                         }
                         else {

@@ -101,6 +101,16 @@
     <Property Name="ProductID" Type="int" Nullable="false" />
     <Property Name="MaDonHang" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <Association Name="FK__SanPham__MaNhaSa__4E88ABD4">
     <End Role="NhaSanXuat" Type="Self.NhaSanXuat" Multiplicity="0..1" />
     <End Role="SanPham" Type="Self.SanPham" Multiplicity="*" />
@@ -232,6 +242,7 @@
     <EntitySet Name="NhaSanXuat" EntityType="Self.NhaSanXuat" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="SanPham_DonHang" EntityType="Self.SanPham_DonHang" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__SanPham__MaNhaSa__4E88ABD4" Association="Self.FK__SanPham__MaNhaSa__4E88ABD4">
       <End Role="NhaSanXuat" EntitySet="NhaSanXuat" />
       <End Role="SanPham" EntitySet="SanPham" />

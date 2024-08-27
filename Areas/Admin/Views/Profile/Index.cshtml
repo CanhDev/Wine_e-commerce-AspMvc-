@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
-    var imgPath = "/images/Personal_Images/" + Model.Image;
+    var imgPath = "~/images/Personal_Images/" + Model.Image;
 }
 
 <main id="main" class="main">
@@ -285,7 +285,7 @@
                                 $("#error-meg").html("");
                                 $("#success-meg").html("Cập nhật thông tin thành công");
                                 setTimeout(() => {
-                                    window.location.href = "/Admin/Profile";
+                                    window.location.href = '@Url.Action("Index", "Profile")';
                                 }, 500);
                             }
                             else {
@@ -314,7 +314,7 @@
                             $("#errorPass-meg").html("");
                             $("#successPass-meg").html("Thay đổi mật khẩu thành công");
                             setTimeout(() => {
-                                window.location.href = "/Admin/Profile"
+                                window.location.href = '@Url.Action("Index", "Profile")';
                             }, 500);
                         }
                         else {

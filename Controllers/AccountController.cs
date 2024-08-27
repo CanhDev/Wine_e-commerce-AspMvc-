@@ -89,7 +89,7 @@ namespace Wine_e_commerce.Controllers
                     ViewBag.checkLogin = "";
                     if (user.TenDangNhap.Equals("Admin"))
                     {
-                        return Redirect("/Admin");
+                        return RedirectToAction("Index", "Admin");
                     }
                     return RedirectToAction("Index", "Home");
                 }

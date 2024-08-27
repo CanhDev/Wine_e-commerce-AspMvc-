@@ -95,7 +95,7 @@
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="/Home/">
+                            <a class="dropdown-item d-flex align-items-center" href="~/Home/">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Quay về trang chủ</span>
                             </a>
@@ -187,6 +187,7 @@
 </body>
 </html>
 <script>
+    var baseUrl = '@Url.Content("~/")';
     var handleDelete = (btnClass, action, controller, confirmString) => {
         $(document).ready(() => {
             $(document).on("click", btnClass, (e) => {
@@ -198,7 +199,7 @@
                 if (check) {
                     $.ajax({
                         type: "POST",
-                        url: `/${controller}/${action}`,
+                        url: `${baseUrl}${controller}/${action}`,
                         data: JSON.stringify({ id: id }),
                         dataType: "json",
                         contentType: "application/json",
@@ -207,7 +208,7 @@
                                 row.remove();
                                 toastr.success("Xóa thành công!");
                             } else {
-                                toastr.error("Có lỗi trong quá trình xóa!");
+                                toastr.error(res.error);
                             }
                         },
                         error: (res) => {

@@ -155,7 +155,7 @@
                                 $("#error-meg").html("");
                                 $("#success-meg").html("Thêm khách hàng thành công");
                                 setTimeout(() => {
-                                    window.location.href = "/Admin/KhachHangs"
+                                    window.location.href = '@Url.Action("Index", "KhachHangs")'
                                 }, 800);
                             }
                             else {
