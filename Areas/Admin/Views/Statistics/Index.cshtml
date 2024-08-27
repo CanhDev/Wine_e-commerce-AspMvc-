@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+<main id="main" class="main">
+    <!-- BAR CHART -->
+    <h2>Thống kê doanh thu</h2>
+    <div class="card card-success">
+        <div class="card-body">
+            <div style="padding-top: 20px" class="chart">
+                <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Table with stripped rows -->
+                        <h1 style="color: red">@ViewBag.notify</h1>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Ngày</th>
+                                    <th>Doanh thu</th>
+                                    <th>Lợi nhuận</th>
+                                </tr>
+                            </thead>
+                            <tbody id="load_data">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+@section scripts{
+    <script src="~/template_srs/admin/charjs/js/Chart.min.js"></script>
+    <script src="~/template_srs/admin/charjs/js/moment/moment.min.js"></script>
+    <script>
+
+
+        $(function () {
+
+    var arrDoanhThu = [];
+    var arrLoiNhuan = [];
+    var arrDate = [];
+
+    var load_data = (data) => {
+        var html = '';
+        $.each(data, (i, item) => {
+            var strDate = moment(item.Date).format('DD/MM/yyyy');
+            html += "<tr>";
+            html += "<td>" + (i + 1) + "</td>";
+            html += "<td>" + strDate + "</td>"; // Định dạng ngày tháng
+            html += "<td>" + item.DoanhThu.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + "</td>";
+            html += "<td>" + item.LoiNhuan.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) + "</td>";
+            html += "</tr>";
+        });
+        $("#load_data").html(html); // Gán nội dung HTML cho bảng
+    }
+
+    $.ajax({
+        url: '@Url.Action("getStatistic", "Statistics")',
+        type: 'GET',
+        data: {},
+        success: (rs) => {
+            load_data(rs.Data);
+
+            $.each(rs.Data, (i, item) => {
+                var strDate = moment(item.Date).format('DD/MM/yyyy');
+                arrDate.push(strDate);
+                arrDoanhThu.push(item.DoanhThu);
+                arrLoiNhuan.push(item.LoiNhuan);
+            });
+
+            var areaChartData = {
+                labels: arrDate,
+                datasets: [
+                    {
+                        label: 'Lợi nhuận',
+                        backgroundColor: 'rgba(60,141,188,0.9)',
+                        borderColor: 'rgba(60,141,188,0.8)',
+                        pointRadius: false,
+                        pointColor: '#3b8bba',
+                        pointStrokeColor: 'rgba(60,141,188,1)',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        data: arrLoiNhuan
+                    },
+                    {
+                        label: 'Doanh thu',
+                        backgroundColor: 'rgba(210, 214, 222, 1)',
+                        borderColor: 'rgba(210, 214, 222, 1)',
+                        pointRadius: false,
+                        pointColor: 'rgba(210, 214, 222, 1)',
+                        pointStrokeColor: '#c1c7d1',
+                        pointHighlightFill: '#fff',
+                        pointHighlightStroke: 'rgba(220,220,220,1)',
+                        data: arrDoanhThu
+                    },
+                ]
+            }
+
+            var areaChartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                legend: {
+                    display: true
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            display: true,
+                        }
+                    }],
+                    yAxes: [{
+                        gridLines: {
+                            display: true,
+                        }
+                    }]
+                },
+                tooltips: {
+                    callbacks: {
+                        label: function(tooltipItem, data) {
+                            return tooltipItem.datasetIndex === 0 ?
+                                'Lợi nhuận: ' + tooltipItem.yLabel.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) :
+                                'Doanh thu: ' + tooltipItem.yLabel.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+                        }
+                    }
+                }
+            }
+
+            var barChartCanvas = $('#barChart').get(0).getContext('2d');
+            var barChartData = $.extend(true, {}, areaChartData);
+            var temp0 = areaChartData.datasets[0];
+            var temp1 = areaChartData.datasets[1];
+            barChartData.datasets[0] = temp1;
+            barChartData.datasets[1] = temp0;
+
+            var barChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                datasetFill: false
+            }
+
+            new Chart(barChartCanvas, {
+                type: 'bar',
+                data: barChartData,
+                options: areaChartOptions
+            });
+        }
+    });
+});
+
+    </script>    
+}

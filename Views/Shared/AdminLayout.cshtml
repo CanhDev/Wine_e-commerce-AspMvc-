@@ -113,6 +113,12 @@
     <aside id="sidebar" class="sidebar">
         <ul class="sidebar-nav" id="sidebar-nav">
             <li class="nav-item" style="padding: 8px 0">
+                <a class="nav-link @(ViewBag.navActive == 0 ? "" : "collapsed")"
+                   href="~/Admin/Statistics">
+                    <i class="bi bi-layout-text-window-reverse"></i><span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item" style="padding: 8px 0">
                 <a class="nav-link @(ViewBag.navActive == 1 ? "" : "collapsed")"
                    href="~/Admin/SanPhams">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Quản lý danh sách rượu</span>
@@ -133,7 +139,7 @@
             <li class="nav-item">
                 <a class="nav-link @(ViewBag.navActive == 4 ? "" : "collapsed")"
                    href="~/Admin/Profile">
-                    <i class="bi bi-person-bounding-box"></i><span>Thông tin tài khoản cá nhân</span>
+                    <i class="bi bi-person-bounding-box"></i><span>Tài khoản Admin</span>
                 </a>
             </li>
             <!-- End Tables Nav -->
@@ -176,7 +182,7 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
-    @RenderSection("scripts", required: false)
+
 
 </body>
 </html>
@@ -192,7 +198,7 @@
                 if (check) {
                     $.ajax({
                         type: "POST",
-                        url: `/${controller}/${action}`, 
+                        url: `/${controller}/${action}`,
                         data: JSON.stringify({ id: id }),
                         dataType: "json",
                         contentType: "application/json",
@@ -216,3 +222,4 @@
     handleDelete('.deleteOrder', 'HandleDelete', 'DonHangs', 'Bạn có chắc chắn muốn xóa đơn hàng này không?');
     handleDelete('.deleteClient', 'handleDelete', 'KhachHangs', 'Bạn có chắc chắn muốn xóa khách hàng này không?');
 </script>
+@RenderSection("scripts", required: false)

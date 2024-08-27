@@ -17,7 +17,7 @@ namespace Wine_e_commerce.Areas.Admin
             context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
-                new { controller = "SanPhams", action = "Index", id = UrlParameter.Optional }
+                new { controller = "Statistics", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

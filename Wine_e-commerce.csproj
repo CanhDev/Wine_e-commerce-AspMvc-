@@ -53,6 +53,9 @@
       <HintPath>packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -114,9 +117,6 @@
       <Private>True</Private>
       <HintPath>packages\Microsoft.AspNet.WebPages.3.2.9\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -143,6 +143,7 @@
     <Compile Include="Areas\Admin\Controllers\KhachHangsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Admin\Controllers\SanPhamsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -365,6 +366,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\Statistics\Index.cshtml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -652,6 +654,147 @@
     <Content Include="template_srs\admin\assets\vendor\tinymce\themes\silver\theme.min.js" />
     <Content Include="template_srs\admin\assets\vendor\tinymce\tinymce.js" />
     <Content Include="template_srs\admin\assets\vendor\tinymce\tinymce.min.js" />
+    <Content Include="template_srs\admin\charjs\js\Chart.min.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locales.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locales.min.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\af.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ar-dz.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ar-kw.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ar-ly.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ar-ma.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ar-sa.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ar-tn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ar.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\az.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\be.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\bg.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\bm.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\bn-bd.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\bn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\bo.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\br.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\bs.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ca.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\cs.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\cv.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\cy.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\da.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\de-at.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\de-ch.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\de.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\dv.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\el.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\en-au.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\en-ca.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\en-gb.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\en-ie.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\en-il.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\en-in.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\en-nz.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\en-SG.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\eo.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\es-do.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\es-mx.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\es-us.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\es.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\et.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\eu.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\fa.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\fi.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\fil.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\fo.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\fr-ca.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\fr-ch.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\fr.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\fy.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ga.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\gd.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\gl.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\gom-deva.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\gom-latn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\gu.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\he.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\hi.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\hr.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\hu.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\hy-am.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\id.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\is.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\it-ch.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\it.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ja.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\jv.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ka.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\kk.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\km.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\kn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ko.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ku.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ky.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\lb.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\lo.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\lt.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\lv.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\me.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\mi.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\mk.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ml.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\mn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\mr.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ms-my.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ms.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\mt.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\my.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\nb.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ne.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\nl-be.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\nl.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\nn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\oc-lnc.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\pa-in.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\pl.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\pt-br.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\pt.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ro.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ru.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\sd.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\se.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\si.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\sk.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\sl.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\sq.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\sr-cyrl.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\sr.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ss.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\sv.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\sw.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ta.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\te.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\tet.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\tg.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\th.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\tk.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\tl-ph.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\tlh.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\tr.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\tzl.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\tzm-latn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\tzm.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ug-cn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\uk.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\ur.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\uz-latn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\uz.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\vi.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\x-pseudo.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\yo.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\zh-cn.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\zh-hk.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\zh-mo.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\locale\zh-tw.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\moment-with-locales.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\moment-with-locales.min.js" />
+    <Content Include="template_srs\admin\charjs\js\moment\moment.min.js" />
     <Content Include="template_srs\css\bootstrap.min.css" />
     <Content Include="template_srs\css\style.css" />
     <Content Include="template_srs\img\avatar.jpg" />
@@ -922,6 +1065,9 @@
     <Content Include="Views\Product\test.cshtml" />
     <Content Include="Views\Shared\AdminLayout.cshtml" />
     <Content Include="Views\Shared\_FormLayout.cshtml" />
+    <Content Include="template_srs\admin\charjs\js\moment\locales.min.js.map" />
+    <Content Include="template_srs\admin\charjs\js\moment\moment-with-locales.min.js.map" />
+    <Content Include="template_srs\admin\charjs\js\moment\moment.min.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -196,6 +196,8 @@ namespace Wine_e_commerce.Areas.Admin.Controllers
             try
             {
                 SanPham sanPham = db.SanPhams.Find(id);
+                ItemCart item = db.ItemCarts.FirstOrDefault(i => i.idSanPham == id);
+                db.ItemCarts.Remove(item);
                 db.SanPhams.Remove(sanPham);
                 db.SaveChanges();
                 return Json(new { status = true, JsonRequestBehavior.AllowGet });

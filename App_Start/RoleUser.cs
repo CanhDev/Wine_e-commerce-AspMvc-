@@ -15,7 +15,6 @@ namespace Wine_e_commerce.App_Start
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            // Kiểm tra nếu phiên người dùng không tồn tại
             var user = SessionConfig.getUser();
             if (user == null)
             {
