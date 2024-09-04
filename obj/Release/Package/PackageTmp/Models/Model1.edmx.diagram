@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1d6e1e3396034c058aaf811b10190a4f" Name="Diagram1">
+        <EntityTypeShape EntityType="RUOUModel.Authorize" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RUOUModel.DonHang" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RUOUModel.GioHang" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RUOUModel.ItemCart" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RUOUModel.KhachHang" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RUOUModel.LoaiSanPham" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RUOUModel.my_Funtion" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="RUOUModel.NhaSanXuat" Width="1.5" PointX="6" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RUOUModel.SanPham" Width="1.5" PointX="8.25" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="RUOUModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="RUOUModel.FK_Authorize_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="RUOUModel.FK_Authorize_my_Funtion" ManuallyRouted="false" />
+        <AssociationConnector Association="RUOUModel.FK_DonHang_KhachHang" ManuallyRouted="false" />
+        <AssociationConnector Association="RUOUModel.FK_ItemCart_DonHang" ManuallyRouted="false" />
+        <AssociationConnector Association="RUOUModel.FK_ItemCart_GioHang" ManuallyRouted="false" />
+        <AssociationConnector Association="RUOUModel.FK_ItemCart_SanPham" ManuallyRouted="false" />
+        <AssociationConnector Association="RUOUModel.FK_Products_Catalogy" ManuallyRouted="false" />
+        <AssociationConnector Association="RUOUModel.FK__SanPham__MaNhaSa__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="RUOUModel.SanPham_DonHang" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -128,7 +128,7 @@ namespace Wine_e_commerce.Controllers
                     --item.SoLuong;
                 }
                 db.SaveChanges();
-                return Json(new {status = true, value = item.SoLuong.Value, money = item.SoLuong * price , JsonRequestBehavior.AllowGet});
+                return Json(new {status = true, value = item.SoLuong.Value, money = item.SoLuong.Value * price , JsonRequestBehavior.AllowGet});
             }
             catch(Exception ex)
             {

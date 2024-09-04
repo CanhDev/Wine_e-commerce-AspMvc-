@@ -1,0 +1,5 @@
+﻿@model IEnumerable<Wine_e_commerce.Models.LoaiSanPham>
+@foreach (var item in Model)
+{
+    <a href="~/shop/Category/@item.CatalogyID" class="dropdown-item">@item.CatalogyName</a>
+}

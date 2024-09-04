@@ -16,7 +16,6 @@ namespace Wine_e_commerce.Controllers
         {
             List<SanPham> query_8sp = db.SanPhams.Take(8).ToList();
             
-
             var query_8spv2 = (from sp in db.SanPhams
                          orderby sp.Price descending
                          select sp).Take(8).ToList();

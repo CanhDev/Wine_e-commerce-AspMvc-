@@ -1,0 +1,219 @@
+﻿@model Wine_e_commerce.Models.GioHang
+
+@{
+    ViewBag.Title = "Your Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .cartBtn:hover{
+        opacity: 0.5;
+        transition: all linear 0.2s;
+    }
+</style>
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="opacity-0 text-center text-white display-5">...</h1>
+</div>
+
+<!-- Cart Page Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="table-responsive">
+            @if (Model.ItemCarts.Any())
+            {
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Tên rượu</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Tổng tiền</th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ItemCarts)
+                        {
+                            <tr>
+                                <th scope="row">
+                                    <div class="d-flex align-items-center">
+                                        <img src="~/images/Ruou/@item.SanPham.Image" class="img-fluid me-5 rounded-circle" style="width: 80px; height: 80px;" alt="">
+                                    </div>
+                                </th>
+                                <td>
+                                    <p class="mb-0 mt-4">@item.SanPham.ProductName</p>
+                                </td>
+                                <td>
+                                    <p class="mb-0 mt-4">$@item.SanPham.Price</p>
+                                </td>
+                                <td>
+                                    <div style="display:flex">
+                                        <button data-id="@item.itemCartID"  id="addBtn" style="margin:0 6px; border-radius: 40%; border: 2px solid green; background-color: white" class="cartBtn mb-0 mt-4">
+                                            +
+                                        </button>
+                                        <p class="priceProduct" hidden>@item.SanPham.Price</p>
+                                        <p class="quantity mb-0 mt-4">@item.SoLuong</p>
+                                        <button data-id="@item.itemCartID" id="minus_btn" style="margin: 0 6px; border-radius: 40%; border: 2px solid green; background-color: white" class="cartBtn mb-0 mt-4">
+                                            -
+                                        </button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <p class="sumMoney mb-0 mt-4">$@(item.SoLuong * item.SanPham.Price)</p>
+                                </td>
+                                <td>
+                                    <a href="#" data-id="@item.itemCartID" class="btn btn-md rounded-circle bg-light border mt-4 btn-remove-item">
+                                        <i class="fa fa-times text-danger"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <a id="btn-remove-all" href="@Url.Action("RemoveAllItem", "Cart", new {idCart = Model.MaGioHang}, null)" class="btn btn-outline-danger">Xóa hết</a><br /><br />
+                <a id="btn-order" href="@Url.Action("DisplayOrder", "Order", new {idCart = Model.MaGioHang})" class="btn btn-outline-success">Đặt hàng</a>
+            }
+            else
+            {
+                <h2>Bạn chưa thêm sản phẩm nào</h2>
+            }
+
+        </div>
+    </div>
+</div>
+<!-- Cart Page End -->
+@section scripts{
+    <script>
+        $(document).ready(() => {
+            $(".btn-remove-item").on("click", (e) => {
+                e.preventDefault();
+                var target = $(e.target).closest('a');
+                var id = target.data("id");
+                console.log(id);
+                var row = target.closest('tr');
+                var check = confirm("Bạn có chắc chắn muốn xóa sản phẩm này?");
+                if (check) {
+                    $('#spinner').addClass("show");
+                    var inputAjax = {
+                        type: "POST",
+                        url: '@Url.Action("removeItem", "Cart")',
+                        data: JSON.stringify({
+                            id: id,
+                        }),
+                        dataType: "json",
+                        contentType: "application/json",
+                        processData: true,
+                        success: (res) => {
+                            if (res.status == true) {
+                                row.remove();
+                                toastr.success("Xóa thành công", "Thông báo");
+                                if ($('table tbody tr').length == 0) {
+                                    $('#btn-remove-all').remove();
+                                    $('#btn-order').remove();
+                                    $('table').remove();
+                                    $('.table-responsive').html('<h2>Bạn chưa có sản phẩm nào</h2>');
+                                }
+                                $('#spinner').removeClass("show");
+                            }
+                            else {
+                                toastr.error(res.error, "Lỗi");
+                            }
+                        },
+                        error: (res) => {
+                            toastr.error(res.error, "Lỗi");
+                        }
+                    };
+                    $.ajax(inputAjax);
+                }
+            });
+            $("#btn-remove-all").on("click", (e) => {
+                e.preventDefault();
+                var target = e.target;
+                var url = $(target).closest("a").attr("href");
+                var check = confirm("Bạn có chắc chắn muốn xóa hết sản phẩm?");
+                if (check) {
+                    $('#spinner').addClass("show");
+                    var inputAjax = {
+                        type: "POST",
+                        url: url,
+                        dataType: "json",
+                        contentType: false,
+                        processData: false,
+                        success: (res) => {
+                            if (res.status == true) {
+                                $('#spinner').removeClass("show");
+                                setTimeout(() => {
+                                    window.location.href = '@Url.Action("Index", "Cart")';
+                                }, 100);
+                                toastr.success("Xóa thành công", "Thông báo");
+                            } else {
+                                toastr.warning('Đã có lỗi xảy ra. Vui lòng thử lại.', "Cảnh báo");
+                            }
+                        },
+                        error: (res) => {
+                            toastr.warning('Đã có lỗi xảy ra. Vui lòng thử lại.', "Cảnh báo");
+                        }
+                    };
+                    $.ajax(inputAjax);
+                }
+            });
+
+            //
+            $(".cartBtn").on("click", (e) => {
+                var target = $(e.target).closest('button'); 
+                var option = target.text().trim(); 
+                var id = target.data("id"); 
+                var check = true;
+                var row = target.closest('tr'); 
+                var quantityElem = row.find(".quantity"); 
+                var quantity = parseInt(quantityElem.text()); 
+
+                var sumMoneyElem = row.find(".sumMoney");
+                var price = parseFloat(row.find(".priceProduct").text());
+
+                if (option == "-" && quantity == 1) {
+                    check = false;
+                }
+
+                if (check) {
+                    $('#spinner').addClass("show"); 
+
+                    var inputAjax = {
+                        type: "POST",
+                        url: '@Url.Action("updateQuantity", "Cart")',
+                        data: JSON.stringify({
+                            id: id,
+                            option: option,
+                            price: price
+                        }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: (res) => {
+                            if (res.status === true) {
+                                quantityElem.text(res.value);
+                                var formattedMoney = parseFloat(res.money).toLocaleString('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD'
+                                });
+
+                                sumMoneyElem.text(formattedMoney);
+                                $('#spinner').removeClass("show"); 
+                            } else {
+                                alert(res.error); 
+                            }
+                        },
+                        error: (res) => {
+                            alert("Có lỗi xảy ra!"); 
+                        }
+                    };
+
+                    $.ajax(inputAjax); 
+                }
+            });
+
+        });
+    </script>
+}

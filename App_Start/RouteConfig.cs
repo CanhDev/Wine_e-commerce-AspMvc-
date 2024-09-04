@@ -21,4 +21,3 @@ namespace Wine_e_commerce
         }
     }
 }
-//D:\Canh\testDomain\Wine_e-commerce\Wine_e-commerce.sln
